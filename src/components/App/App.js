@@ -20,7 +20,7 @@ class App extends Component {
 
   addNewOrder(newOrder) {
     postToOrders(newOrder)
-      .then(data => this.setState({ orders: [...this.state.orders, data.order] }))
+      .then(data => this.setState({ orders: [...this.state.orders, data] }))
       .catch(err => console.error('Error fetching:', err));
   }
 

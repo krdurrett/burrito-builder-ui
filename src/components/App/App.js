@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import {getOrders} from '../../apiCalls';
+import {getOrders, postToOrders, deleteOrder} from '../../apiCalls';
 import Orders from '../../components/Orders/Orders';
 import OrderForm from '../../components/OrderForm/OrderForm';
 
 class App extends Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       orders: []
@@ -19,7 +19,17 @@ class App extends Component {
   }
 
   addNewOrder = (newOrder) => {
-    this.setState({ orders: [...this.state.orders, newOrder] })
+    postToOrders(newOrder)
+      .then(data => this.setState({ orders: [...this.state.orders, data] }))
+  }
+
+  deleteCompletedOrder = (event) => {
+    deleteOrder(parseInt(event.target.id))
+      .then(() => {
+        getOrders()
+          .then(data => this.setState({ orders: data.orders }))
+      })
+      .catch(err => console.error('Error fetching:', err))
   }
 
   render() {
@@ -30,7 +40,7 @@ class App extends Component {
           <OrderForm addNewOrder={this.addNewOrder} />
         </header>
 
-        <Orders orders={this.state.orders}/>
+        <Orders orders={this.state.orders} deleteCompletedOrder={this.deleteCompletedOrder} />
       </main>
     );
   }

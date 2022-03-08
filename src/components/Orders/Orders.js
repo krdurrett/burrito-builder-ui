@@ -11,6 +11,7 @@ const Orders = props => {
             return <li key={ingredient}>{ingredient}</li>
           })}
         </ul>
+        <button id={order.id} onClick={event => props.deleteCompletedOrder(event)}>Completed Order? DELETE</button>
       </div>
     )
   });

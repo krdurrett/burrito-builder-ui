@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 class OrderForm extends Component {
   constructor(props) {
-    super();
-    this.props = props;
+    super(props);
+    // this.props = props;
     this.state = {
       name: '',
       ingredients: []
@@ -18,6 +18,15 @@ class OrderForm extends Component {
 
   clearInputs = () => {
     this.setState({name: '', ingredients: []});
+  }
+
+  handleNameChange = (event) => {
+    this.setState({ name: event.target.value })
+  }
+
+  handleIngredientChange = (event) => {
+    event.preventDefault()
+    this.setState({ ingredients: [...this.state.ingredients, event.target.name ]})
   }
 
   render() {
